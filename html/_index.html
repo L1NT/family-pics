@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<title>Jeter Family Pictures</title>
+	<link rel="stylesheet" href="pic.css" />
+</head>
+
+<body onresize="resize()" onload="resize()">
+    <header><h1>Jeter Family Pictures & Videos</h1></header>
+    <div class=container>
+        <iframe class="index" src="frameindex.py" name="index"></iframe>
+        <iframe class="thumbnails" src="framethumbnails.py" name="thumbnails" onclick="sizeImg()"></iframe>
+        <iframe class="fullsize" name="fullsize" style="height:0"></iframe>	
+    </div><!-- end .container-->
+	<script>
+	    var fullsize = document.getElementsByClassName('fullsize')[0];
+	    function resize() {
+	        //var fullsize = document.getElementsByClassName('fullsize')[0];
+	        fullsize.style.height = window.innerHeight - 280 + 'px';
+	        sizeImg();
+	    }
+	    function sizeImg() {
+	        var image;
+	        if (image = fullsize.contentDocument.firstChild) {
+	            image.style.height = fullsize.style.height;
+	        }
+	    }
+    </script>
+</body>
+
+</html>
