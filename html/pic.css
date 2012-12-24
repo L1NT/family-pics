@@ -28,6 +28,9 @@ nav {
 	width: 175px;
 	border: 4px solid;
 }
+nav li {
+  display: block;
+}
 
 a:hover {
 	font-weight: bolder;
