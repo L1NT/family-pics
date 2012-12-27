@@ -10,9 +10,38 @@
     <script type="text/javascript" src="thirdparty/fancybox/source/jquery.fancybox.pack.js?v=2.1.0"></script>
     <script type="text/javascript" src="thirdparty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
     <script type="text/javascript">
+       var picServiceURL = 'webservice/familypics.py';
+       var currPath = '/';
+       var currIndex = '0';
+       
         $(document).ready(function() {
             $(".fbox").fancybox();
         });
+        
+        function getDirectories(path) {
+           var dataString = 'function=get_directories' 
+           $.ajax({
+             url: picServiceURL,
+             data: dataString,
+             success: function(data) {
+                $('#title').html('<a href=\"' + picService + '?function=get_directories&path=' + data[0] + '\" target=\"thumbnails\">'+ data[0] +'</a><br />');
+                $('#subtitle').html('');
+                for(var i=1; i<data.len(); i++)
+                  $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
+             }
+             error: function() {
+                alert('There was an error retreiving the list of subdirectories.');
+             }
+           })
+        }
+        
+        function getQuantity(path) {
+           
+        }
+        
+        function loadPic(url) {
+           
+        }
     </script>
   </head>
 

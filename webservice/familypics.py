@@ -7,6 +7,12 @@ import os, cgi, Image
 # this is originally from frameindex.py
 path = '/website/pics' #will want to call this dynamically!!
 
+# parse the url and call the function
+function = HttpRequest.GET.get('function')
+for param in HttpRequest.GET:
+   kargs = param.key + '=' + param.value
+function(**kargs)
+
 def get_directories(path):
     """Gets a list of non-hidden subdirectories.
     
@@ -16,6 +22,7 @@ def get_directories(path):
     Returns:
         A list of directories contained within 'path'.
     """
+    directories = []
     files = os.listdir(path)
     files.sort()
     
@@ -23,8 +30,8 @@ def get_directories(path):
     for file in reversed(files):
        if os.path.isdir(path + '/' + file):
           if file[0] != '_':
-             print "<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (file,file)
-
+             directories.add(file.name)
+    return directories
 
 # this is originaly from framethumbnails.py
 input = cgi.FieldStorage()
