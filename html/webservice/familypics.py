@@ -4,8 +4,8 @@
 import os, cgi, Image
 
 
-# this is originally from frameindex.py
-path = '/website/pics' #will want to call this dynamically!!
+# configuration parameters
+PIC_DIR = '/website/pics' #will want to call this dynamically!!
 
 # parse the url and call the function
 function = HttpRequest.GET.get('function')
@@ -42,10 +42,10 @@ size = 160, 120 #thumbnail size
 
 def get_hgroup(path):
     #is this server stuff, or javascript stuff? probably javascript.
-    print '<h1>',path,'</h1>'
+    print ('<h1>', path, '</h1>')
     for file in os.listdir(webDir+picDir+path):
        if os.path.isdir(webDir+picDir+path+'/'+file):
-          print "<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (path+'/'+file,file)
+          print ("<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (path+'/'+file,file))
 
 def media_count(path):
     """Returns the number of media items in the directory.
@@ -54,7 +54,15 @@ def media_count(path):
     hidden with a leading underscore(_)) is returned.
     """
     pass
+
+def get_media(path, quantity=-1, first_index=0):
+    """Returns the relative urls for the media items within path.
     
+    This service returns the urls for the media items contained within the
+    specified path, relative to the PIC_DIR constant.
+    """
+    pass
+
 def get_thumbnails(path, quantity=-1, first_index=0):
     """Gets a specified number of thumbnails images.
     
@@ -97,3 +105,12 @@ def get_thumbnails(path, quantity=-1, first_index=0):
        print "</tr>"
           
     print "</table>"
+
+#this may not be required & totally inadaquate, anyway
+#hopefully apache/lighttpd will restrict the the searching, but perhaps
+#an input of /../pictures will give a list of files in other parts of the web
+#directory?
+def clean_path(path):
+    while '..' in path:
+        path.replace('..', '')
+    

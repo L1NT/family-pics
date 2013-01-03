@@ -68,7 +68,7 @@
                   for(var i=1; i<data.length; i++)
                      $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
                   return data;
-               }
+               },
                error: function() {
                   alert('There was an error retreiving the list of subdirectories.');
                }
