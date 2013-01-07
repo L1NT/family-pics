@@ -1,8 +1,14 @@
-#! /usr/bin python
+#! /usr/bin python3
 # -*- coding: iso-8859-1 -*-
 #  <p>This is the start of my <strong>dynamic</strong> Python server-side photo album.</p>
 
-print """
+################################################
+#TODO: Remove this code after testing!!
+import cgitb
+cgitb.enable()
+################################################
+
+print("""
 <html>
 
 <head>
@@ -50,4 +56,4 @@ print """
     <iframe src="framethumbnails.py" name="thumbnails" id="thumbnails"></iframe>
 </body>
 
-</html>"""
+</html>""")

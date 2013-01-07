@@ -1,9 +1,16 @@
-#! /usr/bin python
+#! /usr/bin python3
 # -*- coding: iso-8859-1 -*-
+
+################################################
+#TODO: Remove this code after testing!!
+import cgitb
+cgitb.enable()
+################################################
+
 
 import os
 
-print"""
+print("""
 <html class="nav">
 
 <head>
@@ -12,7 +19,7 @@ print"""
 </head>
 
 <body class="nav">
-"""
+""")
 
 path = '/website/pics' #will want to call this dynamically!!
 files = os.listdir(path)
@@ -21,9 +28,9 @@ files.sort()
 for file in reversed(files):
    if os.path.isdir(path + '/' + file):
       if file[0] != '_':
-         print "<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (file,file)
+         print("<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (file,file))
    
-print """
+print("""
 </body>
 
-</html>"""
+</html>""")
