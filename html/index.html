@@ -54,7 +54,7 @@
            subDirectories = getDirectories(currPath);
            subHeadingText = path + ': ';
            for (var i=0; i<subDirectories.length; i++) {
-             subHeadingText += '<a href="#" onclick="loadThumbnails(\'' + path + '/' + subDirectories[i] + '\')">' + subDirectories[i] + '</a>&nbsp&nbsp&nbsp';
+             subHeadingText += '<a href="#" onclick="loadThumbnails(\'' + path + '/' + subDirectories[i].replace(/\'/g,"\\'") + '\')">' + subDirectories[i] + '</a>&nbsp&nbsp&nbsp';
            }
            $('#subtitle').html(subHeadingText);
            $.ajax({

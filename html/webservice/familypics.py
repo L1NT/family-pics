@@ -91,7 +91,7 @@ def get_thumbnails(path, quantity=-1, first_index=0):
       if ('.jpg' in i) or ('.JPG' in i):
          if not os.path.exists(WEB_ROOT+thumb):
             image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
-            image.thumbnail(size)
+            image.thumbnail(THUMB_SIZE)
             image.save(WEB_ROOT+thumb, "JPEG")
          thumbnails += "<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
       elif (os.path.exists(WEB_ROOT+thumb)):
