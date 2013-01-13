@@ -26,7 +26,8 @@
                   //$('#subtitle').html('');
                   //for(var i=1; i<data.length; i++)
                   //   $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
-                  data.slice(0,-1);
+                  data = data.trim();
+                  data = data.slice(0,-1);
                   subdirectories = data.split("|");
                },
                error: function() {
@@ -62,7 +63,8 @@
              url: picServiceURL,
              data: dataString,
              success: function(data) {
-               data.slice(0,-1);
+               data = data.trim();
+               data = data.slice(0,-1);
                thumbs = data.split("|");
                var table = $('table#thumbnails');
                table.empty();
