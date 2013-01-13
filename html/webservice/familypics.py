@@ -25,7 +25,7 @@ def get_directories(path):
         path: The root path to search.
         
     Returns:
-        A list of directories contained within 'path'.
+        A list of directories contained within 'path' deliniated with trailing '|'s.
     """
     directories = ''
     files = os.listdir(WEB_ROOT+PIC_URL + path)
@@ -35,7 +35,7 @@ def get_directories(path):
        if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
           if file[0] != '_':
              directories += file + "|"
-    return directories[:-1]
+    return directories
 
 
 #def get_hgroup(path):
@@ -72,8 +72,8 @@ def get_thumbnails(path, quantity=-1, first_index=0):
         
     Returns:
         Thumbnail links delinated by '|' or '' if thumnails doesn't exist and cannot
-        be created.
-        example output: <a [class="media"] href=[web path]><img src="[thumb source]"></a>
+        be created and includes a trailing '|' in the output.
+        example output: <a [class="media"] href=[web path]><img src="[thumb source]"></a>|
 
     """
     thumbnails = ''
@@ -100,7 +100,7 @@ def get_thumbnails(path, quantity=-1, first_index=0):
          thumbnails += "<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i)
       thumbnails += "|"
 
-    return thumbnails[:-1]
+    return thumbnails
     
 #this may not be required & totally inadaquate, anyway
 #hopefully apache/lighttpd will restrict the the searching, but perhaps
