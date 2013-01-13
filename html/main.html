@@ -50,8 +50,12 @@
          function loadThumbnails(path) {
            var dataString = 'function=get_thumbnails&path=' + path;
            currPath = path + '/';
-           //the following really needs to iterate over the returned values and include new links:
-           $('#subtitle').text(path +': '+ getDirectories(currPath));
+           subDirectories = getDirectories(currPath);
+           subHeadingText = path + ': ';
+           for (var i=0; i<subDirectories.length; i++) {
+             subHeadingText += '<a href="#" onclick="loadThumbnails(\'' + path + '/' + subDirectories[i] + '\')">' + subDirectories[i] + '</a>&nbsp&nbsp&nbsp';
+           }
+           $('#subtitle').html(subHeadingText);
            $.ajax({
              async: false,
              url: picServiceURL,
@@ -63,7 +67,15 @@
                for (var i=0; i<thumbs.length; i++) {
                  if (i%4 == 0)
                     table.append('<tr>');
-                 table.find('tr:last').append('<td>' + thumbs[i] + '</td>');    
+                //could maybe search 'tr a[href=*MPG]' and .addClass("movie")?
+                //jQuery would need to accept regular expressions or three searches would
+                //be needed.
+                 if (thumbs[i].indexOf(".MPG") > -1 ||
+                     thumbs[i].indexOf(".MOV") > -1 ||
+                     thumbs[i].indexOf(".3gp") > -1)
+                    table.find('tr:last').append('<td class="movie">' + thumbs[i] + '</td>');
+                 else
+                    table.find('tr:last').append('<td>' + thumbs[i] + '</td>');    
                  if (i%4 == 3)
                     table.append('</tr>');
                }

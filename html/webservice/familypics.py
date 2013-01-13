@@ -35,7 +35,7 @@ def get_directories(path):
        if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
           if file[0] != '_':
              directories += file + "|"
-    return directories
+    return directories[:-1]
 
 
 #def get_hgroup(path):
@@ -80,6 +80,7 @@ def get_thumbnails(path, quantity=-1, first_index=0):
     mylist = []
     
     for file in os.listdir(WEB_ROOT+PIC_URL+path):
+        #TODO: these media extensions need to be replaced by a tuple constant
        if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
           if file[0] != '_':
              mylist.append(file)
@@ -94,12 +95,12 @@ def get_thumbnails(path, quantity=-1, first_index=0):
             image.save(WEB_ROOT+thumb, "JPEG")
          thumbnails += "<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
       elif (os.path.exists(WEB_ROOT+thumb)):
-         thumbnails += "<a class=\"movie\" href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
+         thumbnails += "<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
       else:
-         thumbnails += "<a class=\"movie\" href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i)
+         thumbnails += "<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i)
       thumbnails += "|"
 
-    return thumbnails
+    return thumbnails[:-1]
     
 #this may not be required & totally inadaquate, anyway
 #hopefully apache/lighttpd will restrict the the searching, but perhaps
