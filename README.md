@@ -6,6 +6,15 @@ Turns any file directory containing photos and videos into a web service
 capable of serving folder names, thumbnails, and the photos/videos 
 themselves.
 
+Development plans:
+My current deployed version are Py3 scripts that dynamically return
+formatted html. The next (and current) step is to decouple the presentation
+and control layers and offer an HTML5 front end that makes calls to
+a RESTful web service so that the service can be consumed by other clients.
+The next step will likely involve creating an Android interface that
+uses the web service, and eventually I may convert the RESTful service
+into one which is SOAP- or JSON-formatted.
+
 Licensing:
 I haven't bothered to include any specific user license. Anyone is
 welcome to use and modify this code to their liking. If you make a 
@@ -22,7 +31,7 @@ to run Python scripts and defining web-accessible files/folders.
 
 Requirements:
 - > Python 3.1
-- PIL must be installed [easiest implementation is to use 'pip PIL']
+- Py3-compatible version of PIL must be installed [see http://www.lfd.uci.edu/~gohlke/pythonlibs/#pil]
 - included html pages require jQuery and fancybox plugin
 
 Deployment:
