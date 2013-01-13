@@ -105,7 +105,7 @@
                   function() {
                      var directories = getDirectories('/');
                      for (var i=0; i<directories.length; i++) {
-                        $(this).append('<li><a href="#" onclick="loadThumbnails(\'' + directories[i] + '\')">' + directories[i] + '</a></li>');
+                        $(this).append('<li><a href="#" onclick="loadThumbnails(\'' + directories[i].replace(/\'/g,"\\'") + '\')">' + directories[i] + '</a></li>');
                      };
                   }
                );
