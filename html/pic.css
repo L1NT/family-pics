@@ -1,26 +1,13 @@
-html.nav {
-	overflow: hidden;
-}
-
 body {
 	background-color: #CDB79E;
 	font-family: Comic Sans, Lucida Handwriting;
 	margin: 0px;
 	text-align: center;
 }
-body.nav {
-	background-color: #666;
-}
-body.index {
-	overflow: hidden;
-}
-
-iframe {
-	height: 100%;
-	width: 100%;
-}
 
 nav {
+  overflow: hidden;
+  background-color: #666;
 	position: absolute;
 	top: 25px;
 	left: -155px;
@@ -55,6 +42,7 @@ table {
 	margin-right: 15%;
 	width: 70%;
 	border-spacing: 4px;
+	border:
 }
 
 td {
@@ -67,6 +55,9 @@ td {
 
 ul {
 	list-style: none;
+	margin-top: 0px;
+	padding-left: 1em;
+	padding-right: 1em;
 }
 li {
 	display: inline;

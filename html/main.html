@@ -13,24 +13,92 @@
          var picServiceURL = 'webservice/familypics.py';
          var currPath = '/';
          var currIndex = '0';
+        
+         function getDirectories(path) {
+            var dataString = 'function=get_directories&path=' + path;
+            var subdirectories = Array(); 
+            $.ajax({
+               async: false,
+               url: picServiceURL,
+               data: dataString,
+               success: function(data) {
+                  //$('#title').html('<a href=\"' + picService + '?function=get_directories&path=' + data[0] + '\" target=\"thumbnails\">'+ data[0] +'</a><br />');
+                  //$('#subtitle').html('');
+                  //for(var i=1; i<data.length; i++)
+                  //   $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
+                  subdirectories = data.split("|");
+               },
+               error: function() {
+                  alert('There was an error retreiving the list of subdirectories.');
+               }
+            })
+            return subdirectories;
+         }
+         function getThumb(path) {
+           var dataString = 'function=get_thumbnail&path=' + path;
+           var thumb = '';
+           $.ajax({
+             url: picServiceURL,
+             data: dataString,
+             success: function(data) {
+               thumb = data;
+             }
+           })
+           return thumb;
+         }
+         
+         function loadThumbnails(path) {
+           var dataString = 'function=get_thumbnails&path=' + path;
+           currPath = path + '/';
+           //the following really needs to iterate over the returned values and include new links:
+           $('#subtitle').text(path +': '+ getDirectories(currPath));
+           $.ajax({
+             async: false,
+             url: picServiceURL,
+             data: dataString,
+             success: function(data) {
+               thumbs = data.split("|");
+               var table = $('table#thumbnails');
+               table.empty();
+               for (var i=0; i<thumbs.length; i++) {
+                 if (i%4 == 0)
+                    table.append('<tr>');
+                 table.find('tr:last').append('<td>' + thumbs[i] + '</td>');    
+                 if (i%4 == 3)
+                    table.append('</tr>');
+               }
+             }
+           })
+         }
+        
+         function getQuantity(path) {
+         
+         }
+        
+         function loadPic(url) {
+           
+         }
 
+        //this has to follow any functions that it calls!
          $(document).ready(function() {
             $(".fbox").fancybox();
             
-            //add the initial nav bar items, then add the hover functionality
-            $('nav')
-               .append('<ul>')
+            //add the initial nav bar items
+            $('nav ul')
                .each(
                   function() {
                      var directories = getDirectories('/');
                      for (var i=0; i<directories.length; i++) {
-                        $(this).append('<li><a href="#" onclick="loadThumbnails(\'' + directories[i] + '\')>' + directories[i] + '</a></li>');
-                     }
+                        $(this).append('<li><a href="#" onclick="loadThumbnails(\'' + directories[i] + '\')">' + directories[i] + '</a></li>');
+                     };
                   }
-               )
+               );
+               
+            //add the nav bar hover functionality
+            $('nav')
                .hover(
                   function() {
-                     $(this).find('iframe').contents().find('html').css('overflow', 'auto');
+                     $('nav').css('overflow', 'auto');
                      $('div#arrows').hide();
                      $(this).stop().animate(
                         {
@@ -42,7 +110,7 @@
                      );
                   },
                   function() {
-                     $(this).find('iframe').contents().find('html').css('overflow', 'hidden');
+                     $('nav').css('overflow', 'hidden');
                      $('div#arrows').show();
                      $(this).stop().animate(
                         {
@@ -53,48 +121,20 @@
                         'linear'
                      );
                   }
-               )
-               .append('</ul>');
+               );
          });
-        
-         function getDirectories(path) {
-            var dataString = 'function=get_directories&path=' + path; 
-            $.ajax({
-               url: picServiceURL,
-               data: dataString,
-               success: function(data) {
-                  $('#title').html('<a href=\"' + picService + '?function=get_directories&path=' + data[0] + '\" target=\"thumbnails\">'+ data[0] +'</a><br />');
-                  $('#subtitle').html('');
-                  for(var i=1; i<data.length; i++)
-                     $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
-                  return data;
-               },
-               error: function() {
-                  alert('There was an error retreiving the list of subdirectories.');
-               }
-            })
-         }
-        
-         function getQuantity(path) {
-         
-         }
-        
-         function loadPic(url) {
-           
-         }
     </script>
   </head>
 
   <body class="index">
     <nav>
         <div id="arrows"><b>&gt;&gt;</b></div>
-        
-        <iframe src="frameindex.py" id="index" seamless></iframe>
+        <ul><!-- this will hold the list of links --></ul>
     </nav>
     <hgroup>
       <h1 id="title">Jeter Family Digital Photo Album</h1>
       <h2 id="subtitle">(select a folder from the pullout menu to the left)</h2>
     </hgroup>
-    <table id="thumbnails"></table>
+    <table id="thumbnails" border="3"></table>
   </body>
 </html>

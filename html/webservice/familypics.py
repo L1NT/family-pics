@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
-# -*- coding: iso-8859-1 -*-
+# -*- coding: utf-8 -*-
 
-import os, cgi
+import os, sys, cgi
 
 ################################################
 #TODO: Remove this code after testing!!
@@ -13,7 +13,8 @@ cgitb.enable()
 from PIL import Image
 
 # configuration parameters
-PIC_DIR = '/website/pics/' #root directory of the media
+WEB_ROOT = '/website' #root directory of the webserver
+PIC_URL = '/pics/' #root directory of the media
 THUMB_SIZE = 160, 120 #thumbnail size
 
 # functions
@@ -26,15 +27,14 @@ def get_directories(path):
     Returns:
         A list of directories contained within 'path'.
     """
-    directories = []
-    files = os.listdir(PIC_DIR + path)
+    directories = ''
+    files = os.listdir(WEB_ROOT+PIC_URL + path)
     files.sort()
     
-    #this stuff should be in the Javascript ajax function
     for file in reversed(files):
-       if os.path.isdir(PIC_DIR + path + '/' + file):
+       if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
           if file[0] != '_':
-             directories.append(file)
+             directories += file + "|"
     return directories
 
 
@@ -53,57 +53,54 @@ def media_count(path):
     """
     pass
 
-def get_media(path, quantity=-1, first_index=0):
-    """Returns the relative urls for the media items within path.
-    
-    This service returns the urls for the media items contained within the
-    specified path, relative to the PIC_DIR constant.
-    """
-    pass
-
 def get_thumbnails(path, quantity=-1, first_index=0):
-    """Gets a specified number of thumbnails images.
+    """Gets thumbnail images for the specified image or video.
     
     This service returns the requested number of thumbnail images of the
-    images and videos contained within the path directory. If thumbnails
+    images and videos contained within the path directory as anchor tags
+    complete with the path specified for the actual image. If thumbnails
     of the images don't already exist, they will be created.
     
+        ***code expects all extensions to be 3 characters long!!
+
     Args:
-        path: The directory containing the requested media items.
-        quantity: The number of thumbnails to return, or '-1' for all
-            items within the path directory.
-        first_index: 
+        path:
+        
+        quantity:
+        
+        first_index:
+        
+    Returns:
+        Thumbnail links delinated by '|' or '' if thumnails doesn't exist and cannot
+        be created.
+        example output: <a [class="media"] href=[web path]><img src="[thumb source]"></a>
+
     """
-    print('<table border="3">')
+    thumbnails = ''
     mylist = []
     
-    for file in os.listdir(webDir+picDir+path):
+    for file in os.listdir(WEB_ROOT+PIC_URL+path):
        if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
           if file[0] != '_':
              mylist.append(file)
     
     while len(mylist) > 0:
-       print("<tr>")
-       for j in range(4):
-          if len(mylist) == 0:
-             break
-          i = mylist.pop()
-          thumb = picDir+path+'/'+i[:-3]+'THM'
-          if ('.jpg' in i) or ('.JPG' in i):
-             #new stuff: taken from PIL tutorial
-             if not os.path.exists(webDir+thumb):
-                image = Image.open(webDir+picDir+path+'/'+i)
-                image.thumbnail(THUMB_SIZE)
-                image.save(webDir+thumb, "JPEG")
-             print("<td><a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a></td>" % (picDir,path,i,thumb,i,i))
-          elif (os.path.exists(webDir+thumb)):
-             print("<td  class=\"movie\"><a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a></td>" % (picDir,path,i,thumb,i,i))
-          else:
-             print("<td class=\"movie\"><a href=\"%s%s/%s\">%s</td>" % (picDir,path,i,i))
-       print("</tr>")
-          
-    print("</table>")
+      i = mylist.pop()
+      thumb = PIC_URL+path+'/'+i[:-3]+'THM'
+      if ('.jpg' in i) or ('.JPG' in i):
+         if not os.path.exists(WEB_ROOT+thumb):
+            image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
+            image.thumbnail(size)
+            image.save(WEB_ROOT+thumb, "JPEG")
+         thumbnails += "<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
+      elif (os.path.exists(WEB_ROOT+thumb)):
+         thumbnails += "<a class=\"movie\" href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
+      else:
+         thumbnails += "<a class=\"movie\" href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i)
+      thumbnails += "|"
 
+    return thumbnails
+    
 #this may not be required & totally inadaquate, anyway
 #hopefully apache/lighttpd will restrict the the searching, but perhaps
 #an input of /../pictures will give a list of files in other parts of the web
