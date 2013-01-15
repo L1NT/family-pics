@@ -21,11 +21,8 @@
                async: false,
                url: picServiceURL,
                data: dataString,
+               dataType: 'text',
                success: function(data) {
-                  //$('#title').html('<a href=\"' + picService + '?function=get_directories&path=' + data[0] + '\" target=\"thumbnails\">'+ data[0] +'</a><br />');
-                  //$('#subtitle').html('');
-                  //for(var i=1; i<data.length; i++)
-                  //   $('#subtitle').append('<a href=\"' + picService + '?function=get_directories&path='+ data[0] +'\" target=\"thumbnails\">'+ data[0] +'</a>/&nbsp;&nbsp;');
                   data = data.trim();
                   data = data.slice(0,-1);
                   subdirectories = data.split("|");
@@ -62,6 +59,7 @@
              async: false,
              url: picServiceURL,
              data: dataString,
+             dataType: 'text',
              success: function(data) {
                data = data.trim();
                data = data.slice(0,-1);
@@ -105,7 +103,7 @@
                   function() {
                      var directories = getDirectories('/');
                      for (var i=0; i<directories.length; i++) {
-                        $(this).append('<li><a href="#" onclick="loadThumbnails(\'' + directories[i].replace(/\'/g,"\\'") + '\')">' + directories[i] + '</a></li>');
+                        $(this).append('<li><a href="#' + i + '" onclick="loadThumbnails(\'' + directories[i].replace(/\'/g,"\\'") + '\')">' + directories[i] + '</a></li>');
                      };
                   }
                );
