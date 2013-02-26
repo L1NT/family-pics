@@ -25,17 +25,10 @@ def get_directories(path):
         path: The root path to search.
         
     Returns:
-        A list of directories contained within 'path' deliniated with trailing '|'s.
+        A list of directories contained within 'path' deliniated with '|'s.
     """
-    directories = ''
-    files = os.listdir(WEB_ROOT+PIC_URL + path)
-    files.sort()
     
-    for file in reversed(files):
-       if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
-          if file[0] != '_':
-             directories += file + "|"
-    return directories
+    return "|".join(_directory_list(path))
 
 
 #def get_hgroup(path):
@@ -51,7 +44,7 @@ def media_count(path):
     The total number of image and video items (excludes .THM and files
     hidden with a leading underscore(_)) is returned.
     """
-    pass
+    return len(_thumb_list(path))
 
 def get_thumbnails(path, quantity=-1, first_index=0):
     """Gets thumbnail images for the specified image or video.
@@ -71,19 +64,13 @@ def get_thumbnails(path, quantity=-1, first_index=0):
         first_index:
         
     Returns:
-        Thumbnail links delinated by '|' or '' if thumnails doesn't exist and cannot
-        be created and includes a trailing '|' in the output.
+        Thumbnail links delinated by '|' or '' if thumnails don't exist and cannot
+        be created.
         example output: <a [class="media"] href=[web path]><img src="[thumb source]"></a>|
 
     """
-    thumbnails = ''
-    mylist = []
-    
-    for file in os.listdir(WEB_ROOT+PIC_URL+path):
-        #TODO: these media extensions need to be replaced by a tuple constant
-       if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
-          if file[0] != '_':
-             mylist.append(file)
+    thumbnails = []
+    mylist = _thumb_list(path, quantity, first_index)
     
     while len(mylist) > 0:
       i = mylist.pop()
@@ -93,14 +80,13 @@ def get_thumbnails(path, quantity=-1, first_index=0):
             image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
             image.thumbnail(THUMB_SIZE)
             image.save(WEB_ROOT+thumb, "JPEG")
-         thumbnails += "<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
+         thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
       elif (os.path.exists(WEB_ROOT+thumb)):
-         thumbnails += "<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i)
+         thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
       else:
-         thumbnails += "<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i)
-      thumbnails += "|"
+         thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i))
 
-    return thumbnails
+    return "|".join(thumbnails)
     
 #this may not be required & totally inadaquate, anyway
 #hopefully apache/lighttpd will restrict the the searching, but perhaps
@@ -109,6 +95,28 @@ def get_thumbnails(path, quantity=-1, first_index=0):
 def clean_path(path):
     while '..' in path:
         path.replace('..', '')
+
+def _directory_list(path):
+    directories = []
+    files = os.listdir(WEB_ROOT+PIC_URL + path)
+    files.sort()
+    
+    for file in reversed(files):
+       if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
+          if file[0] != '_':
+             directories.append(file)
+    return directories
+
+def _thumb_list(path, quantity, first_index):
+    mylist = []
+    
+    for file in os.listdir(WEB_ROOT+PIC_URL+path):
+        #TODO: these media extensions need to be replaced by a tuple constant
+       if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
+          if file[0] != '_':
+             mylist.append(file)
+    return mylist
+
 
 #####################################
 # Process the request from here.
@@ -120,3 +128,4 @@ function = locals()[urlparams['function'].value]
 #   kargs += param
 path = urlparams['path'].value
 print(function(path))
+

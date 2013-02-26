@@ -24,7 +24,6 @@
                dataType: 'text',
                success: function(data) {
                   data = data.trim();
-                  data = data.slice(0,-1);
                   subdirectories = data.split("|");
                },
                error: function() {
@@ -62,7 +61,6 @@
              dataType: 'text',
              success: function(data) {
                data = data.trim();
-               data = data.slice(0,-1);
                thumbs = data.split("|");
                var table = $('table#thumbnails');
                table.empty();
