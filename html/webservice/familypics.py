@@ -15,7 +15,7 @@ from PIL import Image
 # configuration parameters
 WEB_ROOT = '/website' #root directory of the webserver
 PIC_URL = '/pics/' #root directory of the media
-THUMB_SIZE = 160, 120 #thumbnail size
+thumb_size = (160, 120) #thumbnail size
 
 # functions
 def get_directories(path):
@@ -73,18 +73,18 @@ def get_thumbnails(path, quantity=-1, first_index=0):
     mylist = _thumb_list(path, quantity, first_index)
     
     while len(mylist) > 0:
-      i = mylist.pop()
-      thumb = PIC_URL+path+'/'+i[:-3]+'THM'
-      if ('.jpg' in i) or ('.JPG' in i):
-         if not os.path.exists(WEB_ROOT+thumb):
-            image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
-            image.thumbnail(THUMB_SIZE)
-            image.save(WEB_ROOT+thumb, "JPEG")
-         thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
-      elif (os.path.exists(WEB_ROOT+thumb)):
-         thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
-      else:
-         thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i))
+        i = mylist.pop()
+        thumb = PIC_URL+path+'/'+i[:-3]+'THM'
+        if ('.jpg' in i) or ('.JPG' in i):
+            if not os.path.exists(WEB_ROOT+thumb):
+                image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
+                image.thumbnail(thumb_size)
+                image.save(WEB_ROOT+thumb, "JPEG")
+            thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
+        elif (os.path.exists(WEB_ROOT+thumb)):
+            thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (PIC_URL,path,i,thumb,i,i))
+        else:
+            thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (PIC_URL,path,i,i))
 
     return "|".join(thumbnails)
     
@@ -102,9 +102,9 @@ def _directory_list(path):
     files.sort()
     
     for file in reversed(files):
-       if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
-          if file[0] != '_':
-             directories.append(file)
+        if os.path.isdir(WEB_ROOT+PIC_URL + path + '/' + file):
+            if file[0] != '_':
+                directories.append(file)
     return directories
 
 def _thumb_list(path, quantity, first_index):
@@ -112,20 +112,25 @@ def _thumb_list(path, quantity, first_index):
     
     for file in os.listdir(WEB_ROOT+PIC_URL+path):
         #TODO: these media extensions need to be replaced by a tuple constant
-       if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
-          if file[0] != '_':
-             mylist.append(file)
+        if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
+            if file[0] != '_':
+                mylist.append(file)
     return mylist
 
 
 #####################################
 # Process the request from here.
 # parse the url and call the function
-urlparams = cgi.FieldStorage(keep_blank_values=True) #param set in case things like 'path' are blank
-#function = getattr(self, urlparams['function'].value)
-function = locals()[urlparams['function'].value]
-#for param in urlparams:
-#   kargs += param
-path = urlparams['path'].value
-print(function(path))
 
+# Dictionary.pop() is used to remove the parameters before passing
+# to the specified function (will cause a TypeError if an extra keyword
+# parameter is passed to a function which declares all of its kw args)
+
+urlparams = cgi.FieldStorage(keep_blank_values=True) #param set in case things like 'path' are blank
+if 'width' in urlparams and 'height' in urlparams:
+    thumb_size = (urlparams.pop('width'), urlparams.pop('height'))
+function = locals()[urlparams.pop('function')]
+try:
+    print(function(**urlparams))
+except TypeError as error:
+    print(error + " please review the documentation for the correct parameters to use.")
