@@ -1,13 +1,72 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+  android:orientation="vertical"
+  android:layout_width="fill_parent"
+  android:layout_height="fill_parent"
+  >
+  <LinearLayout
+    android:id="@+id/topNav"
+    android:orientation="horizontal"
     android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_alignParentTop="true"
     >
-<TextView  
+    <Button
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Back"
+      />
+    <Button
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Subfolders"
+      />
+    <Button
+      android:layout_width="fill_parent"
+      android:layout_height="wrap_content"
+      android:layout_weight="1"
+      android:text="Save"
+      />
+  </LinearLayout>
+  <LinearLayout
+    android:id="@+id/location"
+    android:orientation="horizontal"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:layout_below="@+id/topNav"
+    >
+    <TextView
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content" 
+      android:layout_weight="1"
+      android:gravity="center"
+      android:text="(relative directory location):"
+      />
+    <TextView
+      android:layout_width="fill_parent" 
+      android:layout_height="wrap_content" 
+      android:layout_weight="1"
+      android:gravity="center"
+      android:text="photofile.jpg"
+      />
+  </LinearLayout>
+  <ImageView
+    android:id="@+id/image"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:adjustViewBounds="true"
+    android:layout_below="@+id/location"
+    android:layout_above="@+id/xofy"
+    android:clickable="true"
+    />
+  <TextView
+    android:id="@+id/xofy"
     android:layout_width="fill_parent" 
     android:layout_height="wrap_content" 
-    android:text="Hello World, FamilyPics"
+    android:layout_alignParentBottom="true"
+    android:gravity="center"
+    android:text="#x of y"
     />
-</LinearLayout>
-
+</RelativeLayout>

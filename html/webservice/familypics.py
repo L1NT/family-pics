@@ -17,6 +17,12 @@ WEB_ROOT = '/website' #root directory of the webserver
 PIC_URL = '/pics/' #root directory of the media
 thumb_size = (160, 120) #thumbnail size
 
+# setup the thumbnail cache
+cgi.__file__
+CACHE = os.path.dirname(os.path.realpath(__file__))+'cache' - WEB_ROOT
+if not os.path.exists(CACHE):
+    os.makedirs(CACHE)
+
 # functions
 def get_directories(path):
     """Gets a list of non-hidden subdirectories.
@@ -38,7 +44,7 @@ def get_directories(path):
 #       if os.path.isdir(webDir+picDir+path+'/'+file):
 #          print ("<a href=\"framethumbnails.py?path=%s\" target=\"thumbnails\">%s</a><br />" % (path+'/'+file,file))
 
-def media_count(path):
+def media_count(path, **kwargs):
     """Returns the number of media items in the directory.
     
     The total number of image and video items (excludes .THM and files
@@ -46,7 +52,7 @@ def media_count(path):
     """
     return len(_thumb_list(path))
 
-def get_thumbnails(path, quantity=-1, first_index=0):
+def get_thumbnails(path, **kwargs):
     """Gets thumbnail images for the specified image or video.
     
     This service returns the requested number of thumbnail images of the
@@ -63,18 +69,23 @@ def get_thumbnails(path, quantity=-1, first_index=0):
         
         first_index:
         
+        filter:
+        
     Returns:
         Thumbnail links delinated by '|' or '' if thumnails don't exist and cannot
         be created.
         example output: <a [class="media"] href=[web path]><img src="[thumb source]"></a>|
-
     """
     thumbnails = []
-    mylist = _thumb_list(path, quantity, first_index)
-    
+    try:
+        mylist = _thumb_list(path, quantity, first_index, filter)
+    except TypeError as error:
+        print(error + " :: The get_thumbnails service call only accepts the following arguments: path, quantity, first_index, and filter.")
+        
     while len(mylist) > 0:
         i = mylist.pop()
-        thumb = PIC_URL+path+'/'+i[:-3]+'THM'
+        #thumb = CACHE+path+'/'+i[:i.rfind('.')]+'_'+thumb_size[0]+'x'+thumb_size[1]'.THM'
+        thumb = PIC_URL+path+'/'+i[:i.rfind('.')]+'.THM'
         if ('.jpg' in i) or ('.JPG' in i):
             if not os.path.exists(WEB_ROOT+thumb):
                 image = Image.open(WEB_ROOT+PIC_URL+path+'/'+i)
@@ -107,7 +118,7 @@ def _directory_list(path):
                 directories.append(file)
     return directories
 
-def _thumb_list(path, quantity, first_index):
+def _thumb_list(path, quantity=-1, first_index=0, filter=None):
     mylist = []
     
     for file in os.listdir(WEB_ROOT+PIC_URL+path):
@@ -130,7 +141,4 @@ urlparams = cgi.FieldStorage(keep_blank_values=True) #param set in case things l
 if 'width' in urlparams and 'height' in urlparams:
     thumb_size = (urlparams.pop('width'), urlparams.pop('height'))
 function = locals()[urlparams.pop('function')]
-try:
-    print(function(**urlparams))
-except TypeError as error:
-    print(error + " please review the documentation for the correct parameters to use.")
+print(function(**urlparams))

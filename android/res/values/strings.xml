@@ -1,4 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">FamilyPics</string>
+    
+    <!-- menu -->
+    <string name="upload">Upload</string>
+    <string name="settings">Settings</string>
+    <string name="exit">Exit</string>
+    
 </resources>
