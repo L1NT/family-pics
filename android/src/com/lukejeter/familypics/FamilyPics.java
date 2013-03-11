@@ -3,6 +3,7 @@ package com.lukejeter.familypics;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.MenuInflater;
 
 public class FamilyPics extends Activity
@@ -20,5 +21,23 @@ public class FamilyPics extends Activity
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu, menu);
         return true;
+    }
+    
+    @Override
+    public boolean onMenuItemSelected(int featureId, MenuItem item) {
+        switch (item.getItemId()) {
+            case R.id.upload:
+                //archive(item);
+                return true;
+            case R.id.settings:
+                Settings settings = new Settings();
+                settings.show();
+                return true;
+            case R.id.exit:
+                finish();
+                return true;
+            default:
+                return false;
+        }
     }
 }
