@@ -10,8 +10,7 @@ public class FamilyPics extends Activity
 {
     /** Called when the activity is first created. */
     @Override
-    public void onCreate(Bundle savedInstanceState)
-    {
+    public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main);
     }
@@ -30,8 +29,10 @@ public class FamilyPics extends Activity
                 //archive(item);
                 return true;
             case R.id.settings:
-                Settings settings = new Settings();
-                settings.show();
+				Intent settingsActivity = new Intent(getBaseContext(), Settings.class);
+                startActivity(settingsActivity);
+//                Settings settings = new Settings();
+//                settings.show();
                 return true;
             case R.id.exit:
                 finish();

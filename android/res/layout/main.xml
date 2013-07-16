@@ -52,8 +52,14 @@
       android:text="photofile.jpg"
       />
   </LinearLayout>
+  <!-- TODO: should this be an ImageView or an FragmentActivity -->
+  <fragment android:name="com.lukejeter.familypics.ImageActivity"
+	android:id="@+id/image_activity"
+	android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    />
   <ImageView
-    android:id="@+id/image"
+    android:id="@+id/image_view"
     android:layout_width="fill_parent"
     android:layout_height="wrap_content"
     android:adjustViewBounds="true"
@@ -61,6 +67,7 @@
     android:layout_above="@+id/xofy"
     android:clickable="true"
     />
+  <!-- -->
   <TextView
     android:id="@+id/xofy"
     android:layout_width="fill_parent" 
