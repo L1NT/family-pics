@@ -34,7 +34,10 @@ nosetests.xml
 
 # Mr Developer
 .mr.developer.cfg
-.project
-.pydevproject
 
 android/gen
+
+# Eclipse project files
+*.classpath
+.project
+.pydevproject
