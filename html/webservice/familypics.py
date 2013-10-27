@@ -84,24 +84,26 @@ class FamilyPics:
             pic_dir_thumb = self.pic_url+path+'/'+item[:item.rfind('.')]+'.THM'
             if not os.path.exists(self.web_root + self.cache + path):
                 os.makedirs(self.web_root + self.cache + path)
-            
-            #this creates a specific-sized thumbnail in the cache from a jpeg
-            if ('.jpg' in item) or ('.JPG' in item):
-#            if item[item.rfind('.'):] in ['jpg', 'JPG']:
-                if not os.path.exists(self.web_root+cache_thumb):
-                    image = Image.open(self.web_root+self.pic_url+path+'/'+item)
-                    image.thumbnail(self.thumb_size)
-                    image.save(self.web_root+cache_thumb, "JPEG")
-                thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
-            #this creates a thumbnail if a .THM already exists alongside the video item
-            elif (os.path.exists(self.web_root+pic_dir_thumb)):
-                if not os.path.exists(self.web_root+cache_thumb):
-                    image = Image.open(self.web_root+pic_dir_thumb)
-                    image.thumbnail(self.thumb_size)
-                    image.save(self.web_root+cache_thumb, "JPEG")
-                thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
-            else:
-                thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (self.pic_url,path,item,item))
+            try:
+                #this creates a specific-sized thumbnail in the cache from a jpeg
+                if ('.jpg' in item) or ('.JPG' in item):
+    #            if item[item.rfind('.'):] in ['jpg', 'JPG']:
+                    if not os.path.exists(self.web_root+cache_thumb):
+                        image = Image.open(self.web_root+self.pic_url+path+'/'+item)
+                        image.thumbnail(self.thumb_size)
+                        image.save(self.web_root+cache_thumb, "JPEG")
+                    thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
+                #this creates a thumbnail if a .THM already exists alongside the video item
+                elif (os.path.exists(self.web_root+pic_dir_thumb)):
+                    if not os.path.exists(self.web_root+cache_thumb):
+                        image = Image.open(self.web_root+pic_dir_thumb)
+                        image.thumbnail(self.thumb_size)
+                        image.save(self.web_root+cache_thumb, "JPEG")
+                    thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
+                else:
+                    thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (self.pic_url,path,item,item))
+            except Exception as e:
+                thumbnails.append("<!-- the following image failed to open: %s because: %s -->" % (item,e))
     
         return "|".join(thumbnails)
         
