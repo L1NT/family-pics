@@ -48,7 +48,7 @@ td {
    text-align:center;
 }
   td.movie {
-      background-image: url(filmstrip.png);
+      background-image: url(../img/filmstrip.png);
       background-size: 100% 100%;
   }
 

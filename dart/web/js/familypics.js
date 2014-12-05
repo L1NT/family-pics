@@ -1,24 +1,23 @@
- var picServiceURL = 'webservice/familypics.py';
+ var picServiceURL = '/webservice/familypics.py';
  var currPath = '/';
  var currIndex = '0';
 
  function getDirectories(path) {
-    var dataString = 'function=get_directories&path=' + path;
-    var subdirectories = Array(); 
-    $.ajax({
-       async: false,
-       url: picServiceURL,
-       data: dataString,
-       dataType: 'text',
-       success: function(data) {
-          data = data.trim();
-          subdirectories = data.split("|");
-       },
-       error: function() {
-          alert('There was an error retreiving the list of subdirectories.');
-       }
-    })
-    return subdirectories;
+	var dataString = 'function=get_directories&path=' + path;
+	var subdirectories = Array(); 
+	$.ajax({
+	   async: false,
+	   url: picServiceURL,
+	   data: dataString,
+	   dataType: 'text',
+	   success: function(data) {
+		 subdirectories = JSON.parse(data);
+	   },
+	   error: function() {
+	     alert('There was an error retreiving the list of subdirectories.');
+	   }
+	})
+	return subdirectories;
  }
  
  function getThumb(path) {

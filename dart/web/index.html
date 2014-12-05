@@ -6,17 +6,19 @@
       <title>Jeter Family Pictures</title>
       <link rel="stylesheet" href="thirdparty/fancybox/source/jquery.fancybox.css?v=2.1.0" type="text/css" media="screen" />
       <link rel="stylesheet" type="text/css" href="thirdparty/clippy/clippy.css" media="all">
-      <link rel="stylesheet" type="text/css" href="pic.css" />
+      <link rel="stylesheet" type="text/css" href="css/pic.css" />
       <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
       <script type="text/javascript" src="thirdparty/fancybox/source/jquery.fancybox.pack.js?v=2.1.0"></script>
       <script type="text/javascript" src="thirdparty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
-      <script src="thirdparty/clippy/clippy.js"></script>
-      <script type="text/javascript" src="javascript/familypics.js"></script>
+      <script type="text/javascript" src="thirdparty/clippy/clippy.js"></script>
+
+<script src="js/familypics.js"></script>
       <script>
-clippy.load('Links', function(agent) {
-    // Do anything with the loaded agent
-    agent.show();
-});
+        clippy.load('Links', function(agent) {
+          // Do anything with the loaded agent
+          agent.show();
+        });
+
         $(document).ready(function() {
           $(".fbox").fancybox();
 

@@ -1,7 +1,7 @@
 #! /usr/bin/env python3
 # -*- coding: utf-8 -*-
 
-import os, sys, cgi, configparser
+import os, sys, cgi, configparser, json
 
 ################################################
 #TODO: Remove this code after testing!!
@@ -37,7 +37,7 @@ class FamilyPics:
             A list of directories contained within 'path' deliniated with '|'s.
         """
         
-        return "|".join(self._directory_list(path))
+        return json.dumps(self._directory_list(path))
     
     def media_count(self, path, **kwargs):
         """Returns the number of media items in the directory.
@@ -92,20 +92,24 @@ class FamilyPics:
                         image = Image.open(self.web_root+self.pic_url+path+'/'+item)
                         image.thumbnail(self.thumb_size)
                         image.save(self.web_root+cache_thumb, "JPEG")
-                    thumbnails.append("<a href=\"%s%s/%s\" class=\"fbox\" rel=\"group\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
+                elif ('.png' in item):
+                    if not os.path.exists(self.web_root+cache_thumb):
+                        image = Image.open(self.web_root+self.pic_url+path+'/'+item)
+                        image.thumbnail(self.thumb_size)
+                        image.save(self.web_root+cache_thumb, "PNG")
                 #this creates a thumbnail if a .THM already exists alongside the video item
                 elif (os.path.exists(self.web_root+pic_dir_thumb)):
                     if not os.path.exists(self.web_root+cache_thumb):
                         image = Image.open(self.web_root+pic_dir_thumb)
                         image.thumbnail(self.thumb_size)
                         image.save(self.web_root+cache_thumb, "JPEG")
-                    thumbnails.append("<a href=\"%s%s/%s\"><img src=\"%s\" alt=\"%s\" title=\"%s\" /></a>" % (self.pic_url,path,item,cache_thumb,item,item))
-                else:
-                    thumbnails.append("<a href=\"%s%s/%s\">%s</td>" % (self.pic_url,path,item,item))
+                    pass
+                thumbnails.append({"url":self.pic_url+path, "thumb":cache_thumb, "item":item})
             except Exception as e:
-                thumbnails.append("<!-- the following image failed to open: %s because: %s -->" % (item,e))
+                pass
+                thumbnails.append({"error":"image failed to open because: %s"%e, "item":item})
     
-        return "|".join(thumbnails)
+        return json.dumps(thumbnails)
         
     #this may not be required & totally inadaquate, anyway
     #hopefully apache/lighttpd will restrict the the searching, but perhaps
@@ -131,7 +135,7 @@ class FamilyPics:
         
         for file in os.listdir(self.web_root+self.pic_url+path):
 #TODO: these media extensions need to be replaced by a tuple constant
-            if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file):
+            if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file) or ('.png' in file):
 #            if file[file.rfind('.'):] in self.extensions:
                 if file[0] != '_':
                     mylist.append(file)
@@ -155,4 +159,5 @@ if __name__ == '__main__':
     if 'width' in urlparams and 'height' in urlparams:
         familypics.thumb_size = (urlparams.pop('width'), urlparams.pop('height'))
     function = getattr(familypics, urlparams.pop('function'))
+    print("Content-type: text/html\n") #needed for Apache, but not Lighttpd?
     print(function(**urlparams))
