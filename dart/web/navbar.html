@@ -1,0 +1,96 @@
+<link rel="stylesheet" href="thirdparty/animate.css" />
+<style>
+    nav {
+        width: 70%;
+        margin: auto;
+    }
+    nav * {
+        display: inline-block;
+    }
+    nav ul {
+        overflow: hidden;
+        list-style: none;
+        padding: 0;
+        /*transition: all 1s;*/
+        /*-webkit-transition: all 1s;*/
+    }
+    nav li {
+        display: inline-block;
+        border: 1px solid #AAAAAA;
+        border-radius: 5px;
+        background-color: rgba(255,255,255,0.4);
+        margin: 5px;
+        padding: 3px;
+        cursor: pointer;
+        
+        /* to override animate.css defaults */
+        animation-duration: 1.5s;
+        -webkit-animation-duration: 1.5s;
+    }
+    nav img {
+        vertical-align: middle;
+        display: none;
+    }
+    ul#current {
+        /* this should prevent pushing everything off the right side */
+        max-width: 70%;
+    }
+    ul#current:after {
+        content: '|';
+    }
+    /*ul#subdirectories:before {*/
+    /*    content: '';*/
+    /*    float: left;*/
+    /*    background-image: url('img/left-arrow.png');*/
+    /*    height: 40px;*/
+    /*    width: 50px;*/
+    /*    background-size: 100% auto;*/
+    /*    margin: 0px 5px;*/
+    /*}*/
+    /*ul#subdirectories:after {*/
+    /*    float: right;*/
+    /*    content: '';*/
+    /*    background-image: url('img/right-arrow.png');*/
+    /*    height: 40px;*/
+    /*    width: 50px;*/
+    /*    background-size: 100% auto;*/
+    /*    margin: 0px 5px;*/
+    /*}*/
+    /*ul#subdirectories.no-left-arrow:before, ul#subdirectories.no-right-arrow:after {*/
+    /*    content: none;*/
+    /*}*/
+</style>
+
+<nav>
+        <ul id="current">
+            <li>home</li>
+        </ul>
+        <img id="left-arrow" src="img/left-arrow.png" height="40" />
+        <ul id="subdirectories"></ul>
+        <img id="right-arrow" src="img/right-arrow.png" height="40" />
+</nav>
+
+<script src="http://code.jquery.com/jquery.js"></script>
+<script>
+    $("#subdirectories").append('<li class="animated fadeInRight">2012</li>')
+        .append('<li class="animated fadeInRight">2012-06</li>')
+        .append('<li class="animated fadeInRight">2012-12</li>')
+        .append('<li id="target" class="animated fadeInRight">2013</li>')
+        .append('<li class="animated fadeInRight">2014</li>')
+        .append('<li class="animated fadeInRight">2015</li>')
+        .append('<li class="animated fadeInRight">2016</li>');
+    
+    //$("#subdirectories #target").addClass('zoomOutLeft');
+    
+    function selectSubDirectory(li) {
+        var item = document.getElementById(li);
+        document.getElementById('current').appendChild(item);
+        var subdirs = $('#subdirectories li');
+        subdirs.addClass('zoomOutRight');
+        setTimeout(function() {
+            item.classList.remove("fadeInRight");
+            subdirs.remove();
+        }, 1500);
+    }
+    
+</script>
