@@ -34,7 +34,7 @@ class FamilyPics:
             path: The root path to search.
             
         Returns:
-            A list of directories contained within 'path' deliniated with '|'s.
+            A list of directories contained within 'path' delineated with '|'s.
         """
         
         return json.dumps(self._directory_list(path))

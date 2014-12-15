@@ -1,34 +1,14 @@
 body {
-	background-color: #CDB79E;
+  /* TODO: make background-color a gradient */
+	background-color: #555;
 	font-family: Comic Sans, Lucida Handwriting;
 	margin: 0px;
 	text-align: center;
 }
 
-nav {
-  overflow: hidden;
-  background-color: #666;
-	position: absolute;
-	top: 25px;
-	left: -155px;
-	height: 80%;
-	width: 175px;
-	border: 4px solid;
-}
-nav li {
-  display: block;
-}
-
-a:hover {
-	font-weight: bolder;
-}
-a:link {
-    text-decoration: none
-}
-
 h1 {
-   text-align: center;
-   margin: 5px;
+  text-align: center;
+  margin: 5px;
 }
 h2, h3 {
 	display: inline-block;
@@ -37,22 +17,22 @@ h2, h3 {
 h3 {
 	padding: 3px;
 }
+
 table {
 	margin-left: 15%;
 	margin-right: 15%;
 	width: 70%;
 	border-spacing: 4px;
 }
-
 td {
-   text-align:center;
+  text-align:center;
 }
-  td.movie {
-      background-image: url(../img/filmstrip.png);
-      background-size: 100% 100%;
-  }
+td.movie {
+  background-image: url(../img/filmstrip.png);
+  background-size: 100% 100%;
+}
 
-ul {
+/*ul {
 	list-style: none;
 	margin-top: 0px;
 	padding-left: 1em;
@@ -63,11 +43,10 @@ li {
 	padding: 3px;
 	vertical-align: middle;
 	border-style:none;
-/*	height: 120px;*/
 }
 
 div#arrows {
 	position: absolute;
 	top: 0;
 	right: 0;
-}
+}*/
