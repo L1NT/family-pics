@@ -1,5 +1,4 @@
-/*@import url('/fampics/thirdparty/animate.css');*/
-
+@import url('/fampics/thirdparty/animate.css');
 
 nav {
   max-width: 70%;
@@ -31,6 +30,7 @@ nav li {
 nav img {
   margin: auto 0;
   padding: 5px;
+  cursor: pointer;
 }
 ul#current:after {
   content: '|';

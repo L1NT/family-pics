@@ -5,7 +5,7 @@
       {{dir}}
     </li>
   </ul>
-  <img id="left-arrow" src="/fampics/img/left-arrow.png" height="40" ng-click="subDirScroll('left')" ng-show="leftoffset != 0" />
+  <img id="left-arrow" src="/fampics/img/left-arrow.png" height="40" ng-click="subDirScroll('left')" /><!-- ng-show="leftoffset != 0" -->
   <div id="viewport" style="flex:0 100 auto;overflow:hidden;">
     <ul id="subdirectories" style="margin-left: {{leftoffset}}px">
       <li  class="animated fadeInRight" ng-repeat="dir in directories" ng-click="selectSubDirectory(dir)">
@@ -13,5 +13,5 @@
       </li>
     </ul>
   </div>
-  <img id="right-arrow" src="/fampics/img/right-arrow.png" height="40" ng-click="subDirScroll('right')" ng-show="maxoffset != leftoffset" />
+  <img id="right-arrow" src="/fampics/img/right-arrow.png" height="40" ng-click="subDirScroll('right')" /><!-- ng-show="maxoffset != leftoffset" -->
 </nav>

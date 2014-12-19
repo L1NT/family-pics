@@ -13,7 +13,7 @@ import 'package:angular/angular.dart';
 class NavBarComponent {
   List<String> currentPath = [];
   List<String> directories;
-  int maxoffset = -1;
+  int maxoffset = 0;
   int _leftoffset = 0;
   final Http _http;
   
@@ -26,8 +26,10 @@ class NavBarComponent {
     _http.get('/webservice/familypics.py?function=get_directories&path=/' + this.currentPath.join('/'))
       .then((HttpResponse response) {
         directories = response.data;
-        leftoffset = 0;
-      });
+        return;
+//    }).then(() {
+//      leftoffset = 0;      
+    });
   }
   
   void selectSubDirectory(dir) {
@@ -44,9 +46,9 @@ class NavBarComponent {
   
   void subDirScroll(direction) {
     if (direction == 'left') {
-      leftoffset += 100;
+      leftoffset += 300;
     } else if (direction == 'right') {
-      leftoffset -= 100;
+      leftoffset -= 300;
     }
   }
   

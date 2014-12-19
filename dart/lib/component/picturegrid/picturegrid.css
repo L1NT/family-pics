@@ -1,0 +1,13 @@
+table {
+  margin-left: 15%;
+  margin-right: 15%;
+  width: 70%;
+  border-spacing: 4px;
+}
+td {
+  text-align:center;
+}
+td.movie {
+  background-image: url(../img/filmstrip.png);
+  background-size: 100% 100%;
+}

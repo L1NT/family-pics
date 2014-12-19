@@ -10,4 +10,5 @@ transformers:
 - angular:
     dart_sdk: "/usr/lib/dart"
     html_files:
-      - lib/component/navbar.html
+      - lib/component/navbar/navbar.html
+      - lib/component/picturegrid/picturegrid.html
