@@ -12,8 +12,9 @@ import 'package:angular/angular.dart';
     cssUrl: 'picturegrid.css')
 class PictureGridComponent {
   List<String> currentPath = [];
-  List<String> thumbnails = [];
+  List thumbnails = [];
   final Http _http;
+  final String _webserviceUrl = 'http://localhost/webservice';
 
   PictureGridComponent(this._http) {
     _loadThumbnails();
@@ -21,7 +22,7 @@ class PictureGridComponent {
 
   void _loadThumbnails() {
     //ajax call to /webservice/familypics.py?function=get_directories&path=/
-    _http.get('/webservice/familypics.py?function=get_thumbnails&path=/' + this.currentPath.join('/'))
+    _http.get(_webserviceUrl + '/familypics.py?function=get_thumbnails&path=/' + this.currentPath.join('/'))
       .then((HttpResponse response) {
         thumbnails = response.data;
       });

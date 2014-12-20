@@ -123,7 +123,7 @@ class FamilyPics:
         directories = []
         files = os.listdir(self.web_root+self.pic_url + path)
         files.sort()
-        
+
         for file in reversed(files):
             if os.path.isdir(self.web_root+self.pic_url + path + '/' + file):
                 if file[0] != '_':

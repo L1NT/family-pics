@@ -8,7 +8,7 @@ dev_dependencies:
   unittest: ">=0.11.0+5 <0.12.0"
 transformers:
 - angular:
-    dart_sdk: "/usr/lib/dart"
+    dart_sdk: "/opt/dart/dart-sdk"
     html_files:
       - lib/component/navbar/navbar.html
       - lib/component/picturegrid/picturegrid.html

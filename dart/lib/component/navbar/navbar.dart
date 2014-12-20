@@ -1,8 +1,9 @@
 library navbar_component;
 
 import 'dart:html';
-import 'package:logging/logging.dart';
 import 'package:angular/angular.dart';
+import 'package:angular/animate/module.dart';
+import 'package:logging/logging.dart';
 //maybe needed for the animation? http://stackoverflow.com/questions/22569102/how-to-make-animation-in-angular-dart-please-tell-me
 //import 'package:angular/animate/module.dart';
 
@@ -16,6 +17,8 @@ class NavBarComponent {
   int maxoffset = 0;
   int _leftoffset = 0;
   final Http _http;
+  final Animate animate = new Animate();
+  final String _webserviceUrl = 'http://localhost/webservice'; 
   
   NavBarComponent(this._http) {
     _loadDirectories();
@@ -23,7 +26,7 @@ class NavBarComponent {
   
   void _loadDirectories() {
     //ajax call to /webservice/familypics.py?function=get_directories&path=/
-    _http.get('/webservice/familypics.py?function=get_directories&path=/' + this.currentPath.join('/'))
+    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + this.currentPath.join('/'))
       .then((HttpResponse response) {
         directories = response.data;
         return;
@@ -33,7 +36,13 @@ class NavBarComponent {
   }
   
   void selectSubDirectory(dir) {
-    directories.remove(dir);
+    var target = querySelector('navbar /deep/ #subdirectories li#'+dir);
+    var notSelected = querySelectorAll('navbar /deep/ #subdirectories li');
+    animate.addClass(target, 'fadeOutLeft');
+    for (Element item in notSelected) {
+      animate.addClass(item, 'fadeOutRight');
+    }
+    animate.remove(notSelected);
     currentPath.add(dir);
     _loadDirectories();
   }
