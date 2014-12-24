@@ -4,29 +4,29 @@ import 'package:angular/angular.dart';
 import 'package:angular/animate/module.dart';
 import 'package:angular/application_factory.dart';
 import 'package:family_pics/component/navbar/navbar.dart';
-import 'package:family_pics/component/picturegrid/picturegrid.dart';
+import 'package:family_pics/component/photoalbum/photoalbum.dart';
 
-String WEBSERVICE_URL = 'http://localhost/webservice';
+//App configuration
+const String WEBSERVICE_URL = 'http://localhost/webservice';
 
-class NavBar extends Module {
-  NavBar() {
+//route glue between the componets
+//List<String> currentPath = [];
+
+
+class FamPics extends Module {
+  FamPics() {
     bind(NavBarComponent);
-  }
-}
-
-class PictureGrid extends Module {
-  PictureGrid() {
-    bind(PictureGridComponent);
+    bind(PhotoAlbumComponent);
   }
 }
 
 void main() {
   //ngBootstrap();
-  var module = new Module()
-    ..install(new AnimationModule());
+//  var module = new Module()
+//    ..install(new AnimationModule());
   
   applicationFactory()
-    .addModule(new NavBar())
-    .addModule(new PictureGrid())
+    .addModule(new AnimationModule())
+    .addModule(new FamPics())
     .run();
 }

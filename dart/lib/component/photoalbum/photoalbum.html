@@ -8,13 +8,12 @@
   });
 </script-->
 
-
+<navbar path="path"></navbar>
+<hr />
 <table>
-  <tr ng-repeat="thumb in thumbnails" ng-click="" >
+  <tr ng-repeat="thumb in thumbnails" ng-click="getMedia({{thumb.url}})" >
     <td>
-      <a href="/pics/2014-11/IMG_20141118_190517_1.jpg" class="fbox" rel="group">
-        <img src="/pics/_fam_pics_cache/2014-11/IMG_20141118_190517_1_160x120.THM" alt="IMG_20141118_190517_1.jpg" title="IMG_20141118_190517_1.jpg">
-      </a>
+      <img src="{{thumb.thumb}}" alt="{{thumb.item}}" title="{{thumb.item}}">
     </td>
   </tr>
 </table>

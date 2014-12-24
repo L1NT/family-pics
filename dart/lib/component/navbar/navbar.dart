@@ -2,37 +2,34 @@ library navbar_component;
 
 import 'dart:html';
 import 'package:angular/angular.dart';
-import 'package:angular/animate/module.dart';
-import 'package:logging/logging.dart';
 //maybe needed for the animation? http://stackoverflow.com/questions/22569102/how-to-make-animation-in-angular-dart-please-tell-me
 //import 'package:angular/animate/module.dart';
 
 @Component(
     selector: 'navbar',
     templateUrl: 'navbar.html',
-    cssUrl: 'navbar.css')
+    cssUrl: 'navbar.css',
+    publishAs: 'menu')
 class NavBarComponent {
-  List<String> currentPath = [];
   List<String> directories;
   int maxoffset = 0;
   int _leftoffset = 0;
-  final Http _http;
+  List<String> currentPath = [];
+
+  final Http _http;  
+  final String _webserviceUrl = 'http://localhost/webservice';
   final Animate animate = new Animate();
-  final String _webserviceUrl = 'http://localhost/webservice'; 
-  
+
   NavBarComponent(this._http) {
     _loadDirectories();
   }
   
   void _loadDirectories() {
-    //ajax call to /webservice/familypics.py?function=get_directories&path=/
-    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + this.currentPath.join('/'))
+    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + path)
       .then((HttpResponse response) {
         directories = response.data;
         return;
-//    }).then(() {
-//      leftoffset = 0;      
-    });
+      });
   }
   
   void selectSubDirectory(dir) {
@@ -73,4 +70,11 @@ class NavBarComponent {
   }
   int get leftoffset => _leftoffset;
   
+  @NgTwoWay('path')
+  String get path => currentPath.join('/');
+  void set path(String value) {
+    //this shouldn't ever be set
+    //currentPath = value.split('/');
+  }
+
 }
