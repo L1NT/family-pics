@@ -1,17 +1,21 @@
 <nav>
   <ul id="current">
-    <li ng-click="selectCurrentDirectory('/')">Home</li>
-    <li ng-repeat="dir in currentPath" ng-click="selectCurrentDirectory(dir)">
-      {{dir}}
-    </li>
+    <li ng-click="selectCurrentDirectory('/index.html')">Home</li>
+    <a href="/#/view/{{getEncoded(dir.path)}}" ng-repeat="dir in currentPath">
+      <li class="animated fadeInRight" ng-click="selectCurrentDirectory(dir)">
+        {{dir.name}}
+      </li>
+    </a>
   </ul>
-  <img id="left-arrow" src="img/left-arrow.png" height="40" ng-click="subDirScroll('left')" /><!-- ng-show="leftoffset != 0" -->
+  <img id="left-arrow" src="img/left-arrow.png" height="40" ng-click="subDirScroll('left')" ng-show="leftoffset != 0" />
   <div id="viewport" style="flex:0 100 auto;overflow:hidden;">
     <ul id="subdirectories" style="margin-left: {{leftoffset}}px">
-      <li  id="{{dir}}" class="animated fadeInRight" ng-repeat="dir in directories " ng-click="selectSubDirectory(dir)">
-        {{dir}}
-      </li>
+      <a href="/#/view/{{getEncoded(dir.path)}}" ng-repeat="dir in subDirectories">
+        <li id="{{dir.name}}" class="animated fadeInRight" ng-click="selectSubDirectory(dir)">
+          {{dir.name}}
+        </li>
+      </a>
     </ul>
   </div>
-  <img id="right-arrow" src="img/right-arrow.png" height="40" ng-click="subDirScroll('right')" /><!-- ng-show="maxoffset != leftoffset" -->
+  <img id="right-arrow" src="img/right-arrow.png" height="40" ng-click="subDirScroll('right')" ng-show="maxoffset != leftoffset" />
 </nav>

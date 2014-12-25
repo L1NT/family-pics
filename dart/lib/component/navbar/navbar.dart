@@ -11,10 +11,10 @@ import 'package:angular/angular.dart';
     cssUrl: 'navbar.css',
     publishAs: 'menu')
 class NavBarComponent {
-  List<String> directories;
+  List<Directory> currentPath = [];
+  List<Directory> subDirectories = [];
   int maxoffset = 0;
   int _leftoffset = 0;
-  List<String> currentPath = [];
 
   final Http _http;  
   final String _webserviceUrl = 'http://localhost/webservice';
@@ -25,27 +25,35 @@ class NavBarComponent {
   }
   
   void _loadDirectories() {
-    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + path)
+    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + (currentPath.length == 0 ? '' : currentPath.last.path))
       .then((HttpResponse response) {
-        directories = response.data;
+        subDirectories = [];
+        List<String> dirs = response.data;
+        dirs.forEach((dir) {
+          if (currentPath.length == 0) {
+            subDirectories.add(new Directory(dir, dir));
+          } else {
+            subDirectories.add(new Directory(dir, currentPath.last.path + '/' + dir));
+          }
+        });
         return;
       });
   }
-  
+
   void selectSubDirectory(dir) {
-    var target = querySelector('navbar /deep/ #subdirectories li#'+dir);
+    var target = querySelector('navbar /deep/ #subdirectories li#'+dir.name);
     var notSelected = querySelectorAll('navbar /deep/ #subdirectories li');
     animate.addClass(target, 'fadeOutLeft');
     for (Element item in notSelected) {
       animate.addClass(item, 'fadeOutRight');
     }
-    animate.remove(notSelected);
     currentPath.add(dir);
     _loadDirectories();
   }
   
   void selectCurrentDirectory(dir) {
     int index = currentPath.indexOf(dir);
+    animate.addClass(querySelector('navbar /deep/ ul#current'), 'fadeOutRight');
     currentPath.removeRange(index + 1, currentPath.length);
     _loadDirectories();
   }
@@ -69,12 +77,13 @@ class NavBarComponent {
     }
   }
   int get leftoffset => _leftoffset;
-  
-  @NgTwoWay('path')
-  String get path => currentPath.join('/');
-  void set path(String value) {
-    //this shouldn't ever be set
-    //currentPath = value.split('/');
-  }
 
+  String getEncoded(String s) => Uri.encodeQueryComponent(s);
+}
+
+class Directory {
+  final String name;
+  final String path;
+
+  Directory(this.name, this.path);
 }

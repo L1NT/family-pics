@@ -11,4 +11,4 @@ transformers:
     dart_sdk: "/opt/dart/dart-sdk"
     html_files:
       - lib/component/navbar/navbar.html
-      - lib/component/picturegrid/picturegrid.html
+      - lib/component/photogrid/photogrid.html
