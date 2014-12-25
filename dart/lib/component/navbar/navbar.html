@@ -1,6 +1,8 @@
 <nav>
   <ul id="current">
-    <li ng-click="selectCurrentDirectory('/index.html')">Home</li>
+    <a href="/">
+      <li ng-click="selectCurrentDirectory('/')">Home</li>
+    </a>
     <a href="/#/view/{{getEncoded(dir.path)}}" ng-repeat="dir in currentPath">
       <li class="animated fadeInRight" ng-click="selectCurrentDirectory(dir)">
         {{dir.name}}
