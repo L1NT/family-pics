@@ -2,6 +2,8 @@ library navbar_component;
 
 import 'dart:html';
 import 'package:angular/angular.dart';
+import 'package:family_pics/model/directory.dart';
+import 'package:family_pics/service/family_pics.dart';
 //maybe needed for the animation? http://stackoverflow.com/questions/22569102/how-to-make-animation-in-angular-dart-please-tell-me
 //import 'package:angular/animate/module.dart';
 
@@ -16,27 +18,20 @@ class NavBarComponent {
   int maxoffset = 0;
   int _leftoffset = 0;
 
-  final Http _http;
-  final String _webserviceUrl = 'http://localhost/webservice';
+  final FamilyPicsService _famPicService;
   final Animate animate = new Animate();
 
-  NavBarComponent(this._http) {
+  NavBarComponent(this._famPicService) {
     _loadDirectories();
   }
 
   void _loadDirectories() {
-    _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + (currentPath.length == 0 ? '' : currentPath.last.path))
-      .then((HttpResponse response) {
-        subDirectories = [];
-        List<String> dirs = response.data;
-        dirs.forEach((dir) {
-          if (currentPath.length == 0) {
-            subDirectories.add(new Directory(dir, dir));
-          } else {
-            subDirectories.add(new Directory(dir, currentPath.last.path + '/' + dir));
-          }
-        });
-        return;
+    _famPicService.getDirectories(currentPath.length == 0 ? '' : currentPath.last.path)
+      .then((List<Directory> values) {
+        subDirectories = values;
+      })
+      .catchError((e) {
+        subDirectories.clear();
       });
   }
 
@@ -78,14 +73,4 @@ class NavBarComponent {
   }
   int get leftoffset => _leftoffset;
 
-}
-
-class Directory {
-  final String name;
-  final String path;
-
-  //prefix added to avoid invalid starting characters on id properties
-  String get id => "subdir-" + name.replaceAll(' ', '');
-
-  Directory(this.name, this.path);
 }

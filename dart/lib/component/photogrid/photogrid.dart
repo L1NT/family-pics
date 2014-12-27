@@ -1,16 +1,16 @@
 library photogrid_component;
 
-import 'dart:async';
 import 'package:angular/angular.dart';
+import 'package:family_pics/model/thumbnail.dart';
+import 'package:family_pics/service/family_pics.dart';
 
 @Component(
     selector: 'photogrid',
     templateUrl: 'photogrid.html',
     cssUrl: 'photogrid.css')
 class PhotoGridComponent {
-  List<Thumbnails> thumbnails = [];
-  final Http _http;
-  final String _webserviceUrl = 'http://localhost/webservice';
+  final FamilyPicsService _famPicService;
+  List<Thumbnail> thumbnails = [];
 
   String _path = '';
   void set path(String value) {
@@ -19,18 +19,18 @@ class PhotoGridComponent {
   }
   String get path => _path;
     
-  PhotoGridComponent(this._http, RouteProvider routeProvider) {
-//    new Timer.periodic(const Duration(seconds: 3), (timer) {
-//      print(path.toString());
-//    });
+  PhotoGridComponent(this._famPicService, RouteProvider routeProvider) {
     path = routeProvider.parameters['path'];
   }
   
   void _loadThumbnails() {
-    //ajax call to /webservice/familypics.py?function=get_directories&path=/
-    _http.get(_webserviceUrl + '/familypics.py?function=get_thumbnails&path=/' + path)
-      .then((HttpResponse response) {
-        thumbnails = response.data;
+    _famPicService.getThumbnails(path)
+      .then((List<Thumbnail> values) {
+        thumbnails = values;
+      })
+      .catchError((e) {
+        thumbnails.clear();
+        print(e);
       });
   }
   
@@ -38,13 +38,4 @@ class PhotoGridComponent {
     //fancybox me!
   }
 
-}
-
-class Thumbnails {
-  String url;
-  String item;
-  String thumb;
-  String error;
-  
-  Thumbnails(this.url, this.item, this.thumb, this.error);
 }

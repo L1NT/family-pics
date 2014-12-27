@@ -9,9 +9,9 @@ dev_dependencies:
 transformers:
 - angular:
     ##Luke-crunchbang
-    dart_sdk: "/usr/lib/dart"
+    #dart_sdk: "/usr/lib/dart"
     ##dot
-    #dart_sdk: "/opt/dart/dart-sdk"
+    dart_sdk: "/opt/dart/dart-sdk"
     html_files:
       - lib/component/navbar/navbar.html
       - lib/component/photogrid/photogrid.html
