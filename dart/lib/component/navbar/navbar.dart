@@ -16,14 +16,14 @@ class NavBarComponent {
   int maxoffset = 0;
   int _leftoffset = 0;
 
-  final Http _http;  
+  final Http _http;
   final String _webserviceUrl = 'http://localhost/webservice';
   final Animate animate = new Animate();
 
   NavBarComponent(this._http) {
     _loadDirectories();
   }
-  
+
   void _loadDirectories() {
     _http.get(_webserviceUrl + '/familypics.py?function=get_directories&path=/' + (currentPath.length == 0 ? '' : currentPath.last.path))
       .then((HttpResponse response) {
@@ -41,7 +41,7 @@ class NavBarComponent {
   }
 
   void selectSubDirectory(dir) {
-    var target = querySelector('navbar /deep/ #subdirectories li#'+dir.name);
+    var target = querySelector('navbar /deep/ #subdirectories li#'+dir.id);
     var notSelected = querySelectorAll('navbar /deep/ #subdirectories li');
     animate.addClass(target, 'fadeOutLeft');
     for (Element item in notSelected) {
@@ -50,14 +50,14 @@ class NavBarComponent {
     currentPath.add(dir);
     _loadDirectories();
   }
-  
+
   void selectCurrentDirectory(dir) {
     int index = currentPath.indexOf(dir);
     animate.addClass(querySelector('navbar /deep/ ul#current'), 'fadeOutRight');
     currentPath.removeRange(index + 1, currentPath.length);
     _loadDirectories();
   }
-  
+
   void subDirScroll(direction) {
     if (direction == 'left') {
       leftoffset += 300;
@@ -65,7 +65,7 @@ class NavBarComponent {
       leftoffset -= 300;
     }
   }
-  
+
   void set leftoffset(int offset) {
     maxoffset = querySelector('navbar /deep/ #viewport').clientWidth - querySelector('navbar /deep/ #subdirectories').scrollWidth;
     if (offset < maxoffset) {
@@ -78,12 +78,14 @@ class NavBarComponent {
   }
   int get leftoffset => _leftoffset;
 
-  String getEncoded(String s) => Uri.encodeQueryComponent(s);
 }
 
 class Directory {
   final String name;
   final String path;
+
+  //prefix added to avoid invalid starting characters on id properties
+  String get id => "subdir-" + name.replaceAll(' ', '');
 
   Directory(this.name, this.path);
 }

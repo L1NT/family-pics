@@ -7,6 +7,7 @@ import 'package:angular/application_factory.dart';
 
 import 'package:family_pics/component/navbar/navbar.dart';
 import 'package:family_pics/component/photogrid/photogrid.dart';
+import 'package:family_pics/formatter/url_encoder.dart';
 import 'package:family_pics/routing/photoalbum_router.dart';
 
 //App configuration
@@ -17,7 +18,12 @@ class FamPics extends Module {
   FamPics() {
     bind(NavBarComponent);
     bind(PhotoGridComponent);
+
+    bind(UrlEncoder);
+
     bind(RouteInitializerFn, toValue: photoAlbumRouteInitializer);
+//this captures changes to the hash, instead of the default behavior of using both the path _and_ query parts of the URL
+    bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
   }
 }
 
@@ -25,7 +31,7 @@ void main() {
   //ngBootstrap();
 //  var module = new Module()
 //    ..install(new AnimationModule());
-  
+
   //debugging help:
   Logger.root.level = Level.FINEST;
   Logger.root.onRecord.listen((LogRecord r) { print(r.message); });

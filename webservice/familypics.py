@@ -104,6 +104,7 @@ class FamilyPics:
                         image.thumbnail(self.thumb_size)
                         image.save(self.web_root+cache_thumb, "JPEG")
                     pass
+                #TODO: this can still append an invalid "thumb" filename when item is a non-.jpg or .png and a .THM doesn't already exist
                 thumbnails.append({"url":self.pic_url+path, "thumb":cache_thumb, "item":item})
             except Exception as e:
                 pass
