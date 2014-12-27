@@ -8,10 +8,10 @@
   });
 </script-->
 
-<table>
-  <tr ng-repeat="thumb in thumbnails" ng-click="getMedia({{thumb.url}})" >
-    <td>
-      <img src="{{thumb.thumb}}" alt="{{thumb.item}}" title="{{thumb.item}}">
-    </td>
-  </tr>
-</table>
+<div class="pure-g">
+  <div ng-repeat="thumb in thumbnails"
+      class="{{thumb.media == 'movie' ? 'movie ' : ''}}photo-box pure-u-1 pure-u-sm-1-2 pure-u-md-1-4 pure-u-lg-1-6 pure-u-xl-1-8"
+      ng-click="getMedia({{thumb.url}})" >
+    <img src="{{thumb.thumb}}" alt="{{thumb.item}}" title="{{thumb.item}}" />
+  </div>
+</div>
