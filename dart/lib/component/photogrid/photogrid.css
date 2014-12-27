@@ -1,15 +1,21 @@
 @import url('http://yui.yahooapis.com/pure/0.5.0/pure-min.css');
 @import url('http://yui.yahooapis.com/pure/0.5.0/grids-responsive-min.css');
 
+.pure-g {
+  padding: 3em;
+}
+
 .pure-g > div {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 
-  text-align: center;
   overflow: hidden;
   border: .35em inset palevioletred;
-  padding: 10px 0;
+  padding: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 .movie {
