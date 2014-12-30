@@ -26,7 +26,7 @@ class FamilyPicsService {
   }
 
   Future getThumbnails(String path) {
-    return _http.get(_webserviceUrl + '/familypics.py?function=get_thumbnails&path=/' + path)
+    return _http.get(_webserviceUrl + '/familypics.py?function=get_thumbnails&path=' + path)
       .then((HttpResponse response) {
         return response.data as List<Thumbnail>;
       });

@@ -1,14 +1,17 @@
 body {
   /* TODO: make background-color a gradient */
-	background-color: #555;
+  background-image: url('../img/asfalt/asfalt_@2X.png');
+  background-attachment: fixed;
+	/*background-color: #555;*/
 	font-family: Comic Sans, Lucida Handwriting;
 	margin: 0px;
 	text-align: center;
 }
 
 h1 {
-  text-align: center;
-  margin: 5px;
+  margin: 10px;
+  font-size: 4em;
+  color: palevioletred;
 }
 h2, h3 {
 	display: inline-block;

@@ -105,7 +105,7 @@ class FamilyPics:
                         image.save(self.web_root+cache_thumb, "JPEG")
                     pass
                 #TODO: this can still append an invalid "thumb" filename when item is a non-.jpg or .png and a .THM doesn't already exist
-                thumbnails.append({"url":self.pic_url+path, "thumb":cache_thumb, "item":item})
+                thumbnails.append({"url":self.pic_url+path+'/'+item, "thumb":cache_thumb, "item":item})
             except Exception as e:
                 pass
                 thumbnails.append({"error":"image failed to open because: %s"%e, "item":item})

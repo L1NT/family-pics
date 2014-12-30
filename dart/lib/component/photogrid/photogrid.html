@@ -1,4 +1,4 @@
-<!--link rel="stylesheet" href="/fampics/thirdparty/fancybox/source/jquery.fancybox.css?v=2.1.0" type="text/css" media="screen">
+<link rel="stylesheet" href="/fampics/thirdparty/fancybox/source/jquery.fancybox.css?v=2.1.0" type="text/css" media="screen">
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.2/jquery.min.js"></script>
 <script type="text/javascript" src="/fampics/thirdparty/fancybox/source/jquery.fancybox.pack.js?v=2.1.0"></script>
 <script type="text/javascript" src="/fampics/thirdparty/fancybox/lib/jquery.mousewheel-3.0.6.pack.js"></script>
@@ -6,12 +6,14 @@
   $(document).ready(function() {
     $(".fbox").fancybox();
   });
-</script-->
+</script>
 
 <div class="pure-g">
   <div ng-repeat="thumb in thumbnails"
       class="{{thumb.media == 'movie' ? 'movie ' : ''}}photo-box pure-u-1 pure-u-sm-1-2 pure-u-md-1-4 pure-u-lg-1-6 pure-u-xl-1-8"
       ng-click="getMedia({{thumb.url}})" >
-    <img src="{{thumb.thumb}}" alt="{{thumb.item}}" title="{{thumb.item}}" />
+    <a href="{{thumb.url}}"  class="fbox">
+      <img src="{{thumb.thumb}}" alt="{{thumb.item}}" title="{{thumb.item}}" />
+    </a>
   </div>
 </div>
