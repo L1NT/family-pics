@@ -29,15 +29,25 @@ class NavBarComponent {
     _famPicService.getDirectories(currentPath.length == 0 ? '' : currentPath.last.path)
       .then((List<Directory> values) {
         subDirectories = values;
+        leftoffset = 0;
       })
       .catchError((e) {
         subDirectories.clear();
       });
   }
 
+//  @NgCallback('ng-added')
+//  void NgAdded(boolean last) {
+//    print('ngadded called');
+//    if (last) {
+//      leftoffset = 0;
+//    }
+//  }
+
   void selectSubDirectory(dir) {
     var target = querySelector('navbar /deep/ #subdirectories li#'+dir.id);
     var notSelected = querySelectorAll('navbar /deep/ #subdirectories li');
+    querySelector('navbar /deep/ #clickSound').play();
     animate.addClass(target, 'fadeOutLeft');
     for (Element item in notSelected) {
       animate.addClass(item, 'fadeOutRight');
@@ -47,6 +57,7 @@ class NavBarComponent {
   }
 
   void selectCurrentDirectory(dir) {
+    querySelector('navbar /deep/ #clickSound').play();
     int index = currentPath.indexOf(dir);
     animate.addClass(querySelector('navbar /deep/ ul#current'), 'fadeOutRight');
     currentPath.removeRange(index + 1, currentPath.length);
@@ -73,4 +84,19 @@ class NavBarComponent {
   }
   int get leftoffset => _leftoffset;
 
+  //TODO: remove this once a ng-repeat listener is in place
+  boolean get showRightArrow {
+    var viewport = querySelector('navbar /deep/ #viewport');
+    var scrollwidth = querySelector('navbar /deep/ #subdirectories');
+//    print(viewport.toString());
+//    print(scrollwidth.toString());
+//    print(viewport != null && scrollwidth != null);
+
+    if (viewport != null && scrollwidth != null) {
+      maxoffset = viewport.clientWidth - scrollwidth.scrollWidth;
+    }
+//    print("leftoffset: " + leftoffset.toString() + "; maxoffset: " + maxoffset.toString());
+//    print("difference: " + (maxoffset!=leftoffset).toString());
+    return maxoffset != leftoffset;
+  }
 }

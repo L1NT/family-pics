@@ -1,6 +1,10 @@
 <nav>
+  <audio id="clickSound">
+    <source src=click.mp3 type=audio/mpeg />
+    <source src=click.ogg type=audio/ogg />
+  </audio>
   <ul id="current">
-    <a href="/">
+    <a href="#/view/ ">
       <li ng-click="selectCurrentDirectory('/')">Home</li>
     </a>
     <a href="#/view/{{dir.path | urlencoder}}" ng-repeat="dir in currentPath">
@@ -12,12 +16,12 @@
   <img id="left-arrow" src="img/left-arrow.png" height="40" ng-click="subDirScroll('left')" ng-show="leftoffset != 0" />
   <div id="viewport" style="flex:0 100 auto;overflow:hidden;">
     <ul id="subdirectories" style="margin-left: {{leftoffset}}px">
-      <a href="#/view/{{dir.path | urlencoder}}" ng-repeat="dir in subDirectories">
+      <a href="#/view/{{dir.path | urlencoder}}" ng-repeat="dir in subDirectories"><!-- ng-added="NgAdded($last)"-->
         <li id="{{dir.id}}" class="animated fadeInRight" ng-click="selectSubDirectory(dir)">
           {{dir.name}}
         </li>
       </a>
     </ul>
   </div>
-  <img id="right-arrow" src="img/right-arrow.png" height="40" ng-click="subDirScroll('right')" ng-show="maxoffset != leftoffset" />
+  <img id="right-arrow" src="img/right-arrow.png" height="40" ng-click="subDirScroll('right')" ng-show="showRightArrow" />
 </nav>

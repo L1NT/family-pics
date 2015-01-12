@@ -7,7 +7,8 @@ import 'package:family_pics/service/family_pics.dart';
 @Component(
     selector: 'photogrid',
     templateUrl: 'photogrid.html',
-    cssUrl: 'photogrid.css')
+    cssUrl: 'photogrid.css',
+    useShadowDom: false)
 class PhotoGridComponent {
   final FamilyPicsService _famPicService;
   List<Thumbnail> thumbnails = [];
@@ -18,11 +19,11 @@ class PhotoGridComponent {
     _loadThumbnails();
   }
   String get path => _path;
-    
+
   PhotoGridComponent(this._famPicService, RouteProvider routeProvider) {
     path = routeProvider.parameters['path'];
   }
-  
+
   void _loadThumbnails() {
     _famPicService.getThumbnails(path)
       .then((List<Thumbnail> values) {
@@ -33,7 +34,7 @@ class PhotoGridComponent {
         print(e);
       });
   }
-  
+
   void getMedia(String url) {
     //fancybox me!
   }

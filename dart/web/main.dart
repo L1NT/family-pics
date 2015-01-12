@@ -25,16 +25,12 @@ class FamPics extends Module {
     bind(FamilyPicsService);
 
     bind(RouteInitializerFn, toValue: photoAlbumRouteInitializer);
-//this captures changes to the hash, instead of the default behavior of using both the path _and_ query parts of the URL
+    //this captures changes to the hash, instead of the default behavior of using both the path _and_ query parts of the URL
     bind(NgRoutingUsePushState, toValue: new NgRoutingUsePushState.value(false));
   }
 }
 
 void main() {
-  //ngBootstrap();
-//  var module = new Module()
-//    ..install(new AnimationModule());
-
   //debugging help:
   Logger.root.level = Level.FINEST;
   Logger.root.onRecord.listen((LogRecord r) { print(r.message); });
