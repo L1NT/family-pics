@@ -36,13 +36,14 @@ class NavBarComponent {
       });
   }
 
-//  @NgCallback('ng-added')
-//  void NgAdded(boolean last) {
-//    print('ngadded called');
-//    if (last) {
-//      leftoffset = 0;
-//    }
-//  }
+  @NgCallback('ng-added')
+  set added(BoundExpression last) {
+    //print('ngadded called: ' + last.toString());
+    print(last.expression.toString());
+    if (last) {
+      leftoffset = 0;
+    }
+  }
 
   void selectSubDirectory(dir) {
     var target = querySelector('navbar /deep/ #subdirectories li#'+dir.id);
