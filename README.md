@@ -42,6 +42,18 @@ Deployment:
   of your media directory
 - If you choose to use the default html pages, set the picservice url
   variable to point to the /webservice directory
+- compiled front-end Dart code can be found in the /dart/build/ directory
+
+Building:
+- requirements:
+-- dart sdk [dartlang.org]
+-- node?
+- process:
+-- *temporary*: to build the dart code, configure the dart-sdk path in
+dart/pubspec.yaml and execute `pub build` from the /dart directory
+-- *goal*: create package.json and npm tasks to
+--- build dart code into js
+--- generate documentation (at least for the [currently undocumented] python api)
 
 Features:
 - Any file(s) or folder(s) that should be hidden/ignored by the web

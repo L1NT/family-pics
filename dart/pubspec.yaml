@@ -11,7 +11,9 @@ transformers:
     ##Luke-crunchbang
     #dart_sdk: "/usr/lib/dart"
     ##dot
-    dart_sdk: "/opt/dart/dart-sdk"
+    #dart_sdk: "/opt/dart/dart-sdk"
+    ##yakko
+    dart_sdk: "/Applications/dart/dart-sdk"
     html_files:
       - lib/component/navbar/navbar.html
       - lib/component/photogrid/photogrid.html
