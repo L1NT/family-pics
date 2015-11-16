@@ -39,7 +39,7 @@ class NavBarComponent {
   @NgCallback('ng-added')
   set added(BoundExpression last) {
     //print('ngadded called: ' + last.toString());
-    print(last.expression.toString());
+    //print(last.expression.toString());
     if (last) {
       leftoffset = 0;
     }
