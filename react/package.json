@@ -1,0 +1,18 @@
+{
+  "name": "family-pics-react-ui",
+  "version": "0.0.0",
+  "description": "Web interface for Family Pictures service based on React.js.",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma ..."
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/L1NT/family-pics.git"
+  },
+  "author": "Luke Jeter",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/L1NT/family-pics/issues"
+  }
+}
