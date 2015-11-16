@@ -10,7 +10,7 @@ import 'package:family_pics/model/thumbnail.dart';
 @Injectable()
 class FamilyPicsService {
   final Http _http;
-  final String _webserviceUrl = '//webservice';
+  final String _webserviceUrl = '/webservice';
 
   FamilyPicsService(this._http);
 

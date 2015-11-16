@@ -18754,7 +18754,7 @@ z.Qn()
 return z},null,null,4,0,null,190,191,"call"]},
 w314:{
 "^":"r:5;",
-$1:[function(a){return new L.XY(a,"//webservice")},null,null,2,0,null,190,"call"]},
+$1:[function(a){return new L.XY(a,"/webservice")},null,null,2,0,null,190,"call"]},
 w315:{
 "^":"r:5;",
 $1:[function(a){var z=new K.Xy([],[],0,0,a,new Y.aJ(!0))
