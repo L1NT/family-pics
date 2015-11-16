@@ -1,0 +1,41 @@
+body {
+  /* TODO: make background-color a gradient */
+  background-image: url('../img/asfalt/asfalt_@2X.png');
+  background-attachment: fixed;
+	/*background-color: #555;*/
+	font-family: Comic Sans, Lucida Handwriting;
+	margin: 0px;
+	text-align: center;
+}
+
+h1 {
+  margin: 10px;
+  font-size: 4em;
+  color: palevioletred;
+}
+h2, h3 {
+	display: inline-block;
+	margin: 0px;
+}
+h3 {
+	padding: 3px;
+}
+
+/*ul {
+	list-style: none;
+	margin-top: 0px;
+	padding-left: 1em;
+	padding-right: 1em;
+}
+li {
+	display: inline;
+	padding: 3px;
+	vertical-align: middle;
+	border-style:none;
+}
+
+div#arrows {
+	position: absolute;
+	top: 0;
+	right: 0;
+}*/

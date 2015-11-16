@@ -1,0 +1,22 @@
+.pure-g {
+  padding: 3em;
+}
+
+.pure-g > div {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+
+  overflow: hidden;
+  border: .35em inset palevioletred;
+  padding: .5em;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: rgba(255,255,255,0.1);
+}
+
+.movie {
+  background-image: url(../img/filmstrip.png);
+  background-size: 100% 100%;
+}

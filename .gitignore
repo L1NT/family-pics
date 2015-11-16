@@ -11,7 +11,8 @@ dart/packages/
 *.egg
 *.egg-info
 dist
-build
+.packages
+#build
 eggs
 parts
 bin
