@@ -13,6 +13,8 @@ transformers:
       - lib/component/photogrid/photogrid.html
 
     ## Debian package default location
-    dart_sdk: "/usr/lib/dart"
+    #dart_sdk: "/usr/lib/dart"
+    ## OS X install location
+    dart_sdk: "/Applications/dart/dart-sdk"
     ## conventional manual install location
     #dart_sdk: "/opt/dart/dart-sdk"
