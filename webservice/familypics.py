@@ -136,7 +136,7 @@ class FamilyPics:
         
         for file in os.listdir(self.web_root+self.pic_url+path):
 #TODO: these media extensions need to be replaced by a tuple constant
-            if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file) or ('.png' in file):
+            if ('.jpg' in file) or ('.JPG' in file) or ('.MPG' in file) or ('.MOV' in file) or ('.3gp' in file) or ('.png' in file) or ('.mp4' in file):
 #            if file[file.rfind('.'):] in self.extensions:
                 if file[0] != '_':
                     mylist.append(file)
