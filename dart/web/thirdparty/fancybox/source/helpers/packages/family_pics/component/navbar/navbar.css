@@ -1,0 +1,82 @@
+@import url('animate.css');
+
+nav {
+  max-width: 70%;
+  margin: auto;
+  white-space: nowrap;
+  /*overflow: hidden;*/
+  display: inline-flex;
+}
+nav * {
+  display: inline-block;
+}
+nav ul {
+  list-style: none;
+  padding: 0;
+}
+nav li {
+  display: inline-block;
+  border: 1px solid #AAAAAA;
+  border-radius: 5px;
+  background-color: rgba(255,255,255,0.2);
+  margin: 5px;
+  padding: 3px;
+  cursor: pointer;
+
+  /* to override animate.css defaults */
+  animation-duration: 1.5s;
+  -webkit-animation-duration: 1.5s;
+}
+nav li:hover {
+  background-color: rgba(255,255,255,0.4);
+}
+nav img {
+  margin: auto 0;
+  padding: 5px;
+  cursor: pointer;
+}
+
+nav a {
+  text-decoration: none;
+  color: navajowhite;
+}
+nav a:hover {
+  /*font-size: larger;*/
+  font-weight: bolder;
+}
+
+ul#current:after {
+  content: '|';
+  color: navajowhite;
+}
+ul#subdirectories {
+  /* this should prevent collapsing the subdir into nothing */
+  min-width: 30%;
+  transition: margin 2s 0s;
+}
+
+.ng-hide {
+  display: none;
+}
+
+/*ul#subdirectories:before {*/
+/*    content: '';*/
+/*    float: left;*/
+/*    background-image: url('img/left-arrow.png');*/
+/*    height: 40px;*/
+/*    width: 50px;*/
+/*    background-size: 100% auto;*/
+/*    margin: 0px 5px;*/
+/*}*/
+/*ul#subdirectories:after {*/
+/*    float: right;*/
+/*    content: '';*/
+/*    background-image: url('img/right-arrow.png');*/
+/*    height: 40px;*/
+/*    width: 50px;*/
+/*    background-size: 100% auto;*/
+/*    margin: 0px 5px;*/
+/*}*/
+/*ul#subdirectories.no-left-arrow:before, ul#subdirectories.no-right-arrow:after {*/
+/*    content: none;*/
+/*}*/

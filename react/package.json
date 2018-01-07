@@ -1,0 +1,23 @@
+{
+  "name": "family-pics-react-ui",
+  "version": "1.0.0",
+  "description": "ui for consuming the family-pics web service api",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start t/js/karma.conf.js --single-run --browsers PhantomJS --log-level warn"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/L1NT/family-pics.git"
+  },
+  "author": "Luke Jeter",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/L1NT/family-pics/issues"
+  },
+  "homepage": "https://github.com/L1NT/family-pics#readme",
+  "devDependencies": {
+    "react": "^0.13.3",
+    "react-tools": "^0.13.3"
+  }
+}
